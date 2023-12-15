@@ -1,0 +1,68 @@
+definitions:
+  handler.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /gopher/{gopher}:
+    get:
+      consumes:
+      - application/json
+      description: Redirects to the URL of a gopher image based on the provided gopher
+        name
+      operationId: get-gopher-by-name
+      parameters:
+      - description: Gopher name
+        in: path
+        name: gopher
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "301":
+          description: Redirects to the URL of the gopher image
+          schema:
+            type: string
+      summary: Get gopher image by name
+  /health:
+    get:
+      description: Check if the API is healthy
+      operationId: check-health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Check health of the API
+  /hello/{name}:
+    get:
+      consumes:
+      - application/json
+      description: greet a user by name
+      operationId: hello-user
+      parameters:
+      - description: User name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.MessageResponse'
+      summary: Greet a user
+swagger: "2.0"
